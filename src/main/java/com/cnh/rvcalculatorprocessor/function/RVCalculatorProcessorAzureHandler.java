@@ -12,24 +12,10 @@ import java.util.Optional;
 
 public class RVCalculatorProcessorAzureHandler extends FunctionInvoker<RequestDTO<FinancePlusRequestDTO>, HttpResponseMessage> {
 
-    @FunctionName("rvCalculatorProcessor")
-    public HttpResponseMessage execute(
-            @HttpTrigger(name = "rvCalculatorRequest", methods = {HttpMethod.POST},
-                    authLevel = AuthorizationLevel.ANONYMOUS) HttpRequestMessage<Optional<FinancePlusRequestDTO>> request,
-            ExecutionContext context) {
-        RequestDTO<FinancePlusRequestDTO> customRequest = new RequestDTO<>(request);
-        if (request != null){
-            context.getLogger().info("Request ok");
-        }
-        context.getLogger().info(request.getBody().toString());
-        context.getLogger().info("Calling Azure Function RV Calculator REST API...");
-        return handleRequest(customRequest, context);
-
-    }
-
+    // per ora va in errore allo start della funzione perchè gli serve il nome della connessione e il nome della coda
     @FunctionName("rvCalculatorProcessor")
     public void serviceBusProcess(
-            @ServiceBusQueueTrigger(name = "msg",
+            @ServiceBusQueueTrigger(name = "rvCalculatorProcessor",
                     queueName = "myqueuename",
                     connection = "myconnvarname") HttpRequestMessage<Optional<FinancePlusRequestDTO>> request,
             @QueueOutput(name = "output",
