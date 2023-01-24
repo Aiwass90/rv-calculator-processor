@@ -11,8 +11,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class QlikSenseResponseDTO {
 
-    private Double capitalBaseResidual;
-    private Double mfgGuarantee;
+    private Double capitalBaseRV;
+    private Double manufactersGuaranty; // Integer or Double?
     private Double dealerGuarantee;
     private Double additionalDealerGuarantee;
+    private Double causticUsageDeduct;
+    private Double dealerStatusDeduct;
+    private Double ppp;
+    private Double cNHMaintenanceContract;
+    private Double finalMainUnitRV;
+    private Double totalAttachment;
+    private Double finalLeaseRV;
+
 }
