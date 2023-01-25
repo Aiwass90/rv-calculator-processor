@@ -1,6 +1,7 @@
 package com.cnh.rvcalculatorprocessor.function;
 
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.cnh.rvcalculatorprocessor.dto.FinancePlusRequestDTO;
 import com.cnh.rvcalculatorprocessor.dto.QlikSenseResponseDTO;
 import com.cnh.rvcalculatorprocessor.dto.RequestDTO;
@@ -12,20 +13,22 @@ import java.util.Optional;
 
 public class RVCalculatorProcessorAzureHandler extends FunctionInvoker<RequestDTO<FinancePlusRequestDTO>, HttpResponseMessage> {
 
-    // per ora va in errore allo start della funzione perchè gli serve il nome della connessione e il nome della coda
+
     @FunctionName("rvCalculatorProcessor")
     public void serviceBusProcess(
-            @ServiceBusQueueTrigger(name = "rvCalculatorProcessor",
-                    queueName = "myqueuename",
-                    connection = "myconnvarname") HttpRequestMessage<Optional<FinancePlusRequestDTO>> request,
+            @ServiceBusQueueTrigger(name = "message",
+                    queueName = "rvcalculationrequestqueue",
+                    connection = "AccountingServiceBusConnection") String message,
             @QueueOutput(name = "output",
-                    queueName = "test-servicebusqueuesingle-java",
-                    connection = "AzureWebJobsStorage") OutputBinding<QlikSenseResponseDTO> output,
+                    queueName = "rvcalculationresponsequeue",
+                    connection = "AccountingServiceBusConnection") OutputBinding<String> output,
             final ExecutionContext context
     ) {
         context.getLogger().info("Calling Azure Function Receiver RV Calculator Processor...");
 
-        output.setValue(new QlikSenseResponseDTO());
+        context.getLogger().info(message);
+
+        output.setValue(message);
     }
 
 
