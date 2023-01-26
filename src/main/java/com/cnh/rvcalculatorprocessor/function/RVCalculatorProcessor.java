@@ -10,6 +10,7 @@ import com.cnh.rvcalculatorprocessor.servicebus.ServiceBusConsumer;
 import com.microsoft.azure.functions.HttpResponseMessage;
 import com.microsoft.azure.functions.HttpStatus;
 import com.microsoft.azure.functions.HttpStatusType;
+import com.microsoft.azure.functions.OutputBinding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +21,7 @@ import static com.cnh.rvcalculatorprocessor.util.Constants.CONTENT_TYPE;
 
 
 @Component
-public class RVCalculatorProcessor implements Function<RequestDTO<FinancePlusRequestDTO>, HttpResponseMessage>{
+public class RVCalculatorProcessor implements Function<RequestDTO<String>, OutputBinding<String>>{
 
 
     @Autowired
@@ -43,18 +44,16 @@ public class RVCalculatorProcessor implements Function<RequestDTO<FinancePlusReq
     } */
 
     @Override
-    public HttpResponseMessage apply(RequestDTO<FinancePlusRequestDTO> financePlusRequestDTO) {
+    public OutputBinding<String> apply(RequestDTO<String> output) {
 
         // 1.0 send the request on RequestQueue
         System.out.println("Sending message from Producer...");
-        FinancePlusRequestDTO request = financePlusRequestDTO.getRequestMessage().getBody().get();
+        System.out.println(output.toString());
         // decommentare
         try {
-            serviceBusConsumer.receiveMessage(request);
+            //serviceBusConsumer.receiveMessage(output);
         } catch (Exception e) {
             System.out.println(e.getMessage()); // print log...
-            return new ResponseBuilder().status(HttpStatusType.custom(HttpStatus.INTERNAL_SERVER_ERROR.value()))
-                    .header(CONTENT_TYPE, APPLICATION_JSON).body(new ExceptionResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage())).build();
             //return new ResponseBuilder().status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApplicationException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.name())).build();
         }
         // 2.0 se non riesco a trovare la soluzione request/reply con le librerie Azure allora seguo il passo 3.0
@@ -65,7 +64,8 @@ public class RVCalculatorProcessor implements Function<RequestDTO<FinancePlusReq
                 .dealerGuarantee(66.6)
                 .manufactersGuaranty(44.6).build();
 
+
         // response di esempio
-        return new ResponseBuilder().header(CONTENT_TYPE, APPLICATION_JSON).status(HttpStatus.OK).body(response).build();
+        return null;
     }
 }
