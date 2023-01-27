@@ -20,7 +20,7 @@ FROM mcr.microsoft.com/azure-functions/java:4-java17-appservice
 
 ENV AzureWebJobsScriptRoot=/home/site/wwwroot \
     AzureFunctionsJobHost__Logging__Console__IsEnabled=true \
-    ServiceBusConnection="Endpoint=sb://eufstsvcbusd01.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=TbsW8lrsJyUf0fb0JIqOen8UPddp4u4yxiM752hAD6M="
+    ServiceBusConnection=""
 
 
 COPY --from=installer-env ["/home/site/wwwroot", "/home/site/wwwroot"]
