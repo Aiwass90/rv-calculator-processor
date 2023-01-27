@@ -1,6 +1,6 @@
 package com.cnh.rvcalculatorprocessor.exception;
 
-public class ApplicationException extends Exception {
+public class ExceptionFunction extends Exception {
 
 	/**
 	 * 
@@ -10,22 +10,22 @@ public class ApplicationException extends Exception {
 
 	private static final long serialVersionUID = -5098388476470339301L;
 
-	public ApplicationException() {
+	public ExceptionFunction() {
 	}
 
-	public ApplicationException(String message, Throwable cause) {
+	public ExceptionFunction(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public ApplicationException(String message) {
+	public ExceptionFunction(String message) {
 		super(message);
 	}
 
-	public ApplicationException(Throwable cause) {
+	public ExceptionFunction(Throwable cause) {
 		super(cause);
 	}
 
-	public ApplicationException(String message, String code) {
+	public ExceptionFunction(String message, String code) {
 
 		this.message = message;
 		this.code = code;

@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.cnh</groupId>
-	<artifactId>rv-calculator-rest-api</artifactId>
+	<artifactId>rv-calculator-processor</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>rv-calculator-rest-api</name>
+	<name>rv-calculator-processor</name>
 	<description>RV Calculator REST API</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -23,8 +23,8 @@
 		<spring.cloud.function.dependencies>4.0.0</spring.cloud.function.dependencies>
 
 		<!-- customize those three properties. The functionAppName should be unique across Azure -->
-		<functionResourceGroup>rv-calculator-rest-api-resource-group</functionResourceGroup>
-		<functionAppName>rv-calculator-rest-api</functionAppName>
+		<functionResourceGroup>rv-calculator-processor-resource-group</functionResourceGroup>
+		<functionAppName>rv-calculator-processor</functionAppName>
 		<functionAppRegion>westeurope</functionAppRegion>
 
 		<stagingDirectory>${project.build.directory}/azure-functions/${functionAppName}</stagingDirectory>
@@ -94,6 +94,15 @@
 			<artifactId>azure-messaging-servicebus</artifactId>
 			<version>7.13.0</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>2.19.0</version>
+			<scope>test</scope>
+		</dependency>
+
 
 	</dependencies>
 

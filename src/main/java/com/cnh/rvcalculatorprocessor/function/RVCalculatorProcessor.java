@@ -12,6 +12,8 @@ import com.microsoft.azure.functions.HttpStatus;
 import com.microsoft.azure.functions.HttpStatusType;
 import com.microsoft.azure.functions.OutputBinding;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.function.adapter.azure.FunctionInvoker;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;
@@ -21,27 +23,20 @@ import static com.cnh.rvcalculatorprocessor.util.Constants.CONTENT_TYPE;
 
 
 @Component
-public class RVCalculatorProcessor implements Function<RequestDTO<String>, OutputBinding<String>>{
+public class RVCalculatorProcessor implements Function<RequestDTO<String>, OutputBinding<String>> {
 
 
     @Autowired
     ServiceBusConsumer serviceBusConsumer;
-    /*@Override
-    public Mono<QlikSenseResponseDTO> apply(Mono<FinancePlusRequestDTO> financePlusRequestDTOMono) {
-        // creare la logica
-        // 1.0 passare per il service bus
-        // 2.0 chiamare RV Calculator Processor
-        sendMessage(financePlusRequestDTOMono);
-        return null;
-    }
 
-    @Bean("rvCalculator")
-    public Function<HttpRequestMessage<Optional<FinancePlusRequestDTO>>, HttpResponseMessage> sendRequest() {
+
+    /*@Bean("rvCalculatorProcessor")
+    public Function<RequestDTO<String>, OutputBinding<String>> sendRequest() {
         // 1.0 triggerare la funzione Azure 'RV Calculator Processor' attraverso il service bus
         QlikSenseResponseDTO responsedto = new QlikSenseResponseDTO();
-        responsedto.setCapitalBaseResidual(22.6);
-        return response -> response.createResponseBuilder(HttpStatus.ACCEPTED).body(responsedto).build();
-    } */
+
+        return response -> null;
+    }*/
 
     @Override
     public OutputBinding<String> apply(RequestDTO<String> output) {
