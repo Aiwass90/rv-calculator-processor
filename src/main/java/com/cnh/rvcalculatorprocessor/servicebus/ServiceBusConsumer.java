@@ -25,8 +25,8 @@ public class ServiceBusConsumer {
     public void sendMessage(QlikSenseResponseDTO qlikSenseResponse, String sessionId) throws ExceptionFunction {
 
         try {
-
-            logger.info("Sending QlikSense Response to response queue...");
+            logger.info("QlikSense Response: \n" + qlikSenseResponse);
+            logger.info("Sending QlikSense Response to the response queue: " + RESPONSE_QUEUE);
 
             Duration delay = Duration.ofMillis(2000);
             AmqpRetryOptions retry = new AmqpRetryOptions();
