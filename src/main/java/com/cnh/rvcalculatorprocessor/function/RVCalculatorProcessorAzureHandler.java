@@ -2,6 +2,7 @@ package com.cnh.rvcalculatorprocessor.function;
 
 import com.cnh.rvcalculatorprocessor.dto.QlikSenseResponseDTO;
 import com.cnh.rvcalculatorprocessor.dto.RequestDTO;
+import com.cnh.rvcalculatorprocessor.dto.RequestQueueDTO;
 import com.cnh.rvcalculatorprocessor.exception.ExceptionFunction;
 import com.cnh.rvcalculatorprocessor.servicebus.ServiceBusConsumer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,8 @@ import static com.cnh.rvcalculatorprocessor.util.Constants.*;
 import static com.cnh.rvcalculatorprocessor.util.ConverterUtils.stubQlikResponse;
 
 
-public class RVCalculatorProcessorAzureHandler extends FunctionInvoker<RequestDTO<String>, OutputBinding<String>> {
+public class RVCalculatorProcessorAzureHandler extends FunctionInvoker<RequestQueueDTO, OutputBinding<String>> {
 
-    ServiceBusConsumer serviceBusConsumer = new ServiceBusConsumer();
 
     @FunctionName("rvCalculatorProcessor")
     public void serviceBusProcess(
@@ -29,15 +29,10 @@ public class RVCalculatorProcessorAzureHandler extends FunctionInvoker<RequestDT
                     connection = "ServiceBusConnection") OutputBinding<String> output,
             final ExecutionContext context
     )  {
+        RequestQueueDTO requestQueue = RequestQueueDTO.builder().json(message).sessionId(sessionId).build();
         context.getLogger().info("START operations in RV Calculator Processor Function...");
         context.getLogger().info("Session ID Processor: " + sessionId);
-        // contact QlikSense App and then send the response to the response queue
-        try {
-            // Sending QlikSense response to response queue...
-            serviceBusConsumer.sendMessage(stubQlikResponse(), sessionId);
-        } catch (ExceptionFunction e) {
-            output.setValue(e.getMessage());
-        }
+        handleRequest(requestQueue, context);
 
     }
 
